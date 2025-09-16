@@ -73,12 +73,16 @@
                                     <a href="#" target="_blank"  >0</a> </td>
                                 <td>
                                     <div class="list-icon-function">                                        
-                                        <div class="item edit">
+                                        <a href="{{route('admin.brand.edit',['id'=>$brand->id])}}">
+                                            <div class="item edit">
                                                 <i class="icon-edit-3"></i>
-                                        </div>
-                                        <div class="item text-danger delete">
+                                             </div>
+                                        </a>
+                                        <form action="#" method="POST">
+                                            <div class="item text-danger delete">
                                                 <i class="icon-trash-2"></i>
-                                        </div>
+                                            </div>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>
