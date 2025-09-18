@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -187,5 +188,9 @@ class AdminController extends Controller
         return redirect()->route('admin.categories')->with('status','Category has been deleted successfully!');
     }
         
-    
+    public function products()
+    {
+        $products = Product::orderBy('created_at','DESC')->paginate(10);
+        return view('admin.products',compact('products'));
+    }
 }
