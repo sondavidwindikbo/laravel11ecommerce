@@ -57,7 +57,7 @@
                                 <th>Code</th>
                                 <th>Type</th>
                                 <th>Value</th>
-                                <th>Caart Value</th>
+                                <th>Cart Value</th>
                                 <th>Expiry Date</th>
                                 <th>Action</th>
                             </tr>

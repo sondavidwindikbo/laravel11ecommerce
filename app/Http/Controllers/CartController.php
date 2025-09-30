@@ -59,7 +59,7 @@ class CartController extends Controller
             ->where('cart_value','<=',Cart::instance('cart')->subtotal())->first();
             if(!$coupon)
             {
-                return redirect()->back()->with('error','invalid coupon code');
+                return redirect()->back()->with('error','invalid coupon code!');
             }
             else{
                 Session::put('coupon',[
@@ -103,6 +103,13 @@ class CartController extends Controller
             ]);
 
         }
+    }
+
+    public function remove_coupon_code()
+    {
+        Session::forget('coupon');
+        Session::forget('discounts');
+        return back()->with('success','Coupon has been removed!');
     }
 
 }
