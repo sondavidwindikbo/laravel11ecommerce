@@ -460,7 +460,7 @@ class AdminController extends Controller
             'expiry_date' => 'required|date',
         ]);
 
-         $coupon = Coupon::find($request->id);
+        $coupon = Coupon::find($request->id);
         $coupon->code = $request->code;
         $coupon->type = $request->type;
         $coupon->value = $request->value;
@@ -468,5 +468,12 @@ class AdminController extends Controller
         $coupon->expiry_date = $request->expiry_date;
         $coupon->save();
         return redirect()->route('admin.coupons')->with('status','Coupon has been updated successfully');
+    }
+
+    public function coupon_delete($id)
+    {
+        $coupon = Coupon::find($id);
+        $coupon->delete();
+        return redirect()->route('admin.coupons')->with('status','Coupon has been deleted successfully');
     }
 }
