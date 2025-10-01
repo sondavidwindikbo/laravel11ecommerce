@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Addresses;
 use App\Models\Coupon;
 use Carbon\Carbon;
+use Faker\Provider\ar_EG\Address;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Surfsidemedia\Shoppingcart\Facades\Cart;
@@ -110,6 +113,17 @@ class CartController extends Controller
         Session::forget('coupon');
         Session::forget('discounts');
         return back()->with('success','Coupon has been removed!');
+    }
+
+    public function checkout()
+    {
+        if(!Auth::check())
+        {
+            return redirect()->route('login');
+        }
+
+        $address = Addresses::where('user_id',Auth::user()->id)->where('isdefault',1)->first();
+        return view('checkout',compact('address'));
     }
 
 }
