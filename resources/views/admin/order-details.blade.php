@@ -2,7 +2,7 @@
 
 @section('content')
 <style>
-    .table-transaction > tbody > tr:nth-of-type(odd) {
+    .table-transaction>tbody>tr:nth-of-type(odd) {
         --bs-table-accent-bg: #fff !important;
     }
 </style>
@@ -36,6 +36,9 @@
             </div>
 
             <div class="table-responsive">
+                @if(Session::has('status'))
+                <p class="alert alert-succes">{{Session::get('status')}}</p>
+                @endif
                 <table class="table table-striped table-bordered">
                     <tr>
                         <th>Order No</th>
@@ -57,11 +60,11 @@
                         <th>Order Status</th>
                         <td colspan="5">
                             @if($order->status == 'delivered')
-                                <span class="badge bg-success">Delivered</span>
+                            <span class="badge bg-success">Delivered</span>
                             @elseif($order->status == 'canceled')
-                                <span class="badge bg-danger">Canceled</span>
+                            <span class="badge bg-danger">Canceled</span>
                             @else
-                                <span class="badge bg-warning">Ordered</span>
+                            <span class="badge bg-warning">Ordered</span>
                             @endif
                         </td>
                     </tr>
@@ -94,34 +97,34 @@
                     </thead>
                     <tbody>
                         @foreach ($orderItems as $item)
-                            <tr>
-                                <td class="pname">
-                                    <div class="image">
-                                        <img src="{{ asset('uploads/products/thumbnails') }}/{{ $item->product->image }}"
-                                             alt="{{ $item->product->name }}" class="image">
+                        <tr>
+                            <td class="pname">
+                                <div class="image">
+                                    <img src="{{ asset('uploads/products/thumbnails') }}/{{ $item->product->image }}"
+                                        alt="{{ $item->product->name }}" class="image">
+                                </div>
+                                <div class="name">
+                                    <a href="{{ route('shop.product.details', ['product_slug' => $item->product->slug]) }}"
+                                        target="_blank" class="body-title-2">
+                                        {{ $item->product->name }}
+                                    </a>
+                                </div>
+                            </td>
+                            <td class="text-center">${{ $item->price }}</td>
+                            <td class="text-center">{{ $item->quantity }}</td>
+                            <td class="text-center">{{ $item->product->SKU }}</td>
+                            <td class="text-center">{{ $item->product->category->name }}</td>
+                            <td class="text-center">{{ $item->product->brand->name }}</td>
+                            <td class="text-center">{{ $item->options }}</td>
+                            <td class="text-center">{{ $item->rstatus == 0 ? 'No' : 'Yes' }}</td>
+                            <td class="text-center">
+                                <div class="list-icon-function view-icon">
+                                    <div class="item eye">
+                                        <i class="icon-eye"></i>
                                     </div>
-                                    <div class="name">
-                                        <a href="{{ route('shop.product.details', ['product_slug' => $item->product->slug]) }}"
-                                           target="_blank" class="body-title-2">
-                                           {{ $item->product->name }}
-                                        </a>
-                                    </div>
-                                </td>
-                                <td class="text-center">${{ $item->price }}</td>
-                                <td class="text-center">{{ $item->quantity }}</td>
-                                <td class="text-center">{{ $item->product->SKU }}</td>
-                                <td class="text-center">{{ $item->product->category->name }}</td>
-                                <td class="text-center">{{ $item->product->brand->name }}</td>
-                                <td class="text-center">{{ $item->options }}</td>
-                                <td class="text-center">{{ $item->rstatus == 0 ? 'No' : 'Yes' }}</td>
-                                <td class="text-center">
-                                    <div class="list-icon-function view-icon">
-                                        <div class="item eye">
-                                            <i class="icon-eye"></i>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                </div>
+                            </td>
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>
@@ -171,18 +174,43 @@
                         <th>Status</th>
                         <td>
                             @if($transaction->status == 'approved')
-                                <span class="badge bg-success">Approved</span>
+                            <span class="badge bg-success">Approved</span>
                             @elseif($transaction->status == 'declinded')
-                                <span class="badge bg-danger">Declinded</span>
+                            <span class="badge bg-danger">Declinded</span>
                             @elseif($transaction->status == 'refunded')
-                                <span class="badge bg-secondary">Refunded</span>
+                            <span class="badge bg-secondary">Refunded</span>
                             @else
-                                <span class="badge bg-warning">Pending</span>
+                            <span class="badge bg-warning">Pending</span>
                             @endif
                         </td>
                     </tr>
                 </tbody>
             </table>
+        </div>
+
+        {{-- Transaction Section --}}
+        <div class="wg-box mt-5">
+            <h5>Update Order Status</h5>
+            <form action="{{route('admin.order.status.update')}}" method="POST">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="order_id" value="{{$order->id}}" />
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="select">
+                            <select id="order_status" name="order_status">
+                                <option value="ordered" {{$order->status == 'ordered' ? "selected":""}}>Ordered</option>
+                                <option value="delivered" {{$order->status == 'delivered' ? "selected":""}}>Delivered</option>
+                                <option value="canceled" {{$order->status == 'canceled' ? "selected":""}}>Canceled</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-primary tf-button w208">Update Status</button>
+                    </div>
+                </div>
+            </form>
+
         </div>
 
     </div>
