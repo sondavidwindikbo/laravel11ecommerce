@@ -24,14 +24,14 @@
                 <div class="wg-filter flex-grow">
                     <form class="form-search">
                         <fieldset class="name">
-                            <input type="text" 
-                                   placeholder="Search here..." 
-                                   class="" 
-                                   name="name"
-                                   tabindex="2" 
-                                   value="" 
-                                   aria-required="true" 
-                                   required="">
+                            <input type="text"
+                                placeholder="Search here..."
+                                class=""
+                                name="name"
+                                tabindex="2"
+                                value=""
+                                aria-required="true"
+                                required="">
                         </fieldset>
                         <div class="button-submit">
                             <button class="" type="submit">
@@ -70,7 +70,15 @@
                                 <td class="text-center">${{$order->subtotal}}</td>
                                 <td class="text-center">${{$order->tax}}</td>
                                 <td class="text-center">${{$order->total}}</td>
-                                <td class="text-center">{{$order->status}}</td>
+                                <td class="text-center">
+                                    @if($order->status == 'delivered')
+                                    <span class="badge bg-success">Delivered</span>
+                                    @elseif($order->status == 'canceled')
+                                    <span class="badge bg-danger">Canceled</span>
+                                    @else
+                                    <span class="badge bg-warning">Ordered</span>
+                                    @endif
+                                </td>
                                 <td class="text-center">{{$order->created_at}}</td>
                                 <td class="text-center">{{$order->orderItems->count()}}</td>
                                 <td class="text-center">{{$order->delivered_date}}</td>
@@ -98,4 +106,3 @@
     </div>
 </div>
 @endsection
-
