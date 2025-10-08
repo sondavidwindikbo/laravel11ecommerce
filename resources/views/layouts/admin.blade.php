@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,7 +11,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="surfside media" />
-     <link rel="stylesheet" type="text/css" href="{{ asset('css/animate.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/animate.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/animation.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-select.min.css') }}">
@@ -24,7 +25,8 @@
 
     @stack("styles")
 </head>
-    <body class="body">
+
+<body class="body">
     <div id="wrapper">
         <div id="page" class="">
             <div class="layout-wrap">
@@ -133,9 +135,9 @@
                                     </ul>
                                 </li>
                                 <li class="menu-item">
-                                    <a href="slider.html" class="">
+                                    <a href="{{route('admin.slides')}}" class="">
                                         <div class="icon"><i class="icon-image"></i></div>
-                                        <div class="text">Slider</div>
+                                        <div class="text">Slides</div>
                                     </a>
                                 </li>
                                 <li class="menu-item">
@@ -159,7 +161,7 @@
                                     </a>
                                 </li>
 
-                                  <li class="menu-item">
+                                <li class="menu-item">
                                     <form method="POST" action="{{route('logout')}}" id="logout-form">
                                         @csrf
                                         <a href="{{route('logout')}}" class="" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
@@ -167,7 +169,7 @@
                                             <div class="text">Logout</div>
                                         </a>
                                     </form>
-                                </li> 
+                                </li>
 
 
                             </ul>
@@ -469,32 +471,33 @@
 
     <script src="{{asset('js/jquery.min.js') }}"></script>
     <script src="{{asset('js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>   
-    <script src="{{ asset('js/sweetalert.min.js') }}"></script>    
+    <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
+    <script src="{{ asset('js/sweetalert.min.js') }}"></script>
     <script src="{{ asset('js/apexcharts/apexcharts.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
     <script>
-        (function ($) {
+        (function($) {
 
-            var tfLineChart = (function () {
+            var tfLineChart = (function() {
 
-                var chartBar = function () {
+                var chartBar = function() {
 
                     var options = {
                         series: [{
-                            name: 'Total',
-                            data: [0.00, 0.00, 0.00, 0.00, 0.00, 273.22, 208.12, 0.00, 0.00, 0.00, 0.00, 0.00]
-                        }, {
-                            name: 'Pending',
-                            data: [0.00, 0.00, 0.00, 0.00, 0.00, 273.22, 208.12, 0.00, 0.00, 0.00, 0.00, 0.00]
-                        },
-                        {
-                            name: 'Delivered',
-                            data: [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-                        }, {
-                            name: 'Canceled',
-                            data: [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
-                        }],
+                                name: 'Total',
+                                data: [0.00, 0.00, 0.00, 0.00, 0.00, 273.22, 208.12, 0.00, 0.00, 0.00, 0.00, 0.00]
+                            }, {
+                                name: 'Pending',
+                                data: [0.00, 0.00, 0.00, 0.00, 0.00, 273.22, 208.12, 0.00, 0.00, 0.00, 0.00, 0.00]
+                            },
+                            {
+                                name: 'Delivered',
+                                data: [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+                            }, {
+                                name: 'Canceled',
+                                data: [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
+                            }
+                        ],
                         chart: {
                             type: 'bar',
                             height: 325,
@@ -535,7 +538,7 @@
                         },
                         tooltip: {
                             y: {
-                                formatter: function (val) {
+                                formatter: function(val) {
                                     return "$ " + val + ""
                                 }
                             }
@@ -553,25 +556,25 @@
 
                 /* Function ============ */
                 return {
-                    init: function () { },
+                    init: function() {},
 
-                    load: function () {
+                    load: function() {
                         chartBar();
                     },
-                    resize: function () { },
+                    resize: function() {},
                 };
             })();
 
-            jQuery(document).ready(function () { });
+            jQuery(document).ready(function() {});
 
-            jQuery(window).on("load", function () {
+            jQuery(window).on("load", function() {
                 tfLineChart.load();
             });
 
-            jQuery(window).on("resize", function () { });
+            jQuery(window).on("resize", function() {});
         })(jQuery);
     </script>
-     @stack("scripts")
+    @stack("scripts")
 </body>
 
 
