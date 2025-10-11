@@ -36,14 +36,14 @@
                     <div class="body-title">
                         Category Name <span class="tf-color-1">*</span>
                     </div>
-                    <input class="flex-grow" type="text" placeholder="Category name" name="name"  tabindex="0" value="{{old('name')}}" aria-required="true" required="">
+                    <input class="flex-grow" type="text" placeholder="Category name" name="name" tabindex="0" value="{{old('name')}}" aria-required="true" required="">
                 </fieldset>
                 @error('name') <span class="alert alert-danger text-center">{{$message}}</span> @enderror
                 <fieldset class="name">
                     <div class="body-title">
                         Category Slug <span class="tf-color-1">*</span>
                     </div>
-                    <input class="flex-grow" type="text" placeholder="Category Slug" name="slug"  tabindex="0" value="{{old('slug')}}" aria-required="true" required="">
+                    <input class="flex-grow" type="text" placeholder="Category Slug" name="slug" tabindex="0" value="{{old('slug')}}" aria-required="true" required="">
                 </fieldset>
                 @error('slug') <span class="alert alert-danger text-center">{{$message}}</span> @enderror
                 <fieldset>
@@ -60,7 +60,7 @@
                                     <i class="icon-upload-cloud"></i>
                                 </span>
                                 <span class="body-text">
-                                    Drop your images here or select 
+                                    Drop your images here or select
                                     <span class="tf-color">click to browse</span>
                                 </span>
                                 <input type="file" id="myFile" name="image" accept="image/*">
@@ -82,28 +82,25 @@
 @endsection
 
 @push('scripts')
-    <script>
-        $(function(){
-            $("#myFile").on("change", function(){
-                const photoInp = $("#myFile");
-                const [file] = this.files;
-                if(file)
-                {
-                    $("#imgpreview img").attr('src',URL.createObjectURL(file));
-                     $("#imgpreview").show();
-                }
-            });
-            $("input[name='name']").on("change",function(){
-                $("input[name='slug']").val(StringToSlug($(this).val()));
-            });
+<script>
+    $(function() {
+        $("#myFile").on("change", function(e) {
+            const photoInp = $("#myFile");
+            const [file] = this.files;
+            if (file) {
+                $("#imgpreview img").attr('src', URL.createObjectURL(file));
+                $("#imgpreview").show();
+            }
         });
+        $("input[name='name']").on("change", function() {
+            $("input[name='slug']").val(StringToSlug($(this).val()));
+        });
+    });
 
-      function StringToSlug(Text)
-       {
-          return Text.toLowerCase()
-            .replace(/[^\w ]+/g, "")   
-            .replace(/ +/g, "-");      
-        }
-
-    </script>
+    function StringToSlug(Text) {
+        return Text.toLowerCase()
+            .replace(/[^\w ]+/g, "")
+            .replace(/ +/g, "-");
+    }
+</script>
 @endpush
